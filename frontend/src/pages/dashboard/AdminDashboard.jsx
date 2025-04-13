@@ -496,7 +496,7 @@ function SettingsComponent() {
     phone: "",
     securityQuestion: "",
     securityAnswer: "",
-    newPassword: "", // Added newPassword field
+    password: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -519,7 +519,7 @@ function SettingsComponent() {
           phone: userData.phone,
           securityQuestion: userData.securityQuestion,
           securityAnswer: userData.securityAnswer,
-          newPassword: "", // Initialize newPassword as empty
+          password: "", // Initialize password as empty
         });
       } catch (error) {
         toast.error("Failed to fetch admin data");
@@ -684,9 +684,9 @@ function SettingsComponent() {
                 </label>
                 <input
                   type="password"
-                  value={formData.newPassword}
+                  value={formData.password}
                   onChange={(e) =>
-                    setFormData({ ...formData, newPassword: e.target.value })
+                    setFormData({ ...formData, password: e.target.value })
                   }
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white transition-colors"
                   placeholder="Enter new password"
