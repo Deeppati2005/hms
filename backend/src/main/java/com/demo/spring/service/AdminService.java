@@ -60,12 +60,10 @@ public class AdminService {
     	Admin admin = adminRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Validate security answer
         if (!admin.getSecurityAnswer().equalsIgnoreCase(securityAnswer)) {
             throw new RuntimeException("Security answer incorrect");
         }
 
-        // Update password
         admin.setPassword(newPassword);
         adminRepository.save(admin);
 
@@ -73,33 +71,25 @@ public class AdminService {
     }
     
     public Admin getAdminProfile() {
-        // Assuming a single admin exists for simplicity
         return adminRepository.findAll().get(0);
     }
 
     public Admin updateAdminProfile(Admin updatedAdmin) {
-        // Find the admin by username
         Admin existingAdmin = adminRepository.findByUsername(updatedAdmin.getUsername())
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
 
-        // Update the fields
         existingAdmin.setName(updatedAdmin.getName());
         existingAdmin.setEmail(updatedAdmin.getEmail());
         existingAdmin.setPhone(updatedAdmin.getPhone());
         existingAdmin.setSecurityQuestion(updatedAdmin.getSecurityQuestion());
         existingAdmin.setSecurityAnswer(updatedAdmin.getSecurityAnswer());
-
-        // Update the password if provided
         if (updatedAdmin.getPassword() != null && !updatedAdmin.getPassword().isEmpty()) {
             existingAdmin.setPassword(updatedAdmin.getPassword());
         }
-
-        // Save the updated admin
         return adminRepository.save(existingAdmin);
     }
 
     public void logoutAdmin() {
-        // Logic for admin logout (e.g., clearing session or token)
     }
 
     public Map<String, String> updateDoctorStatus(Long id, String status) {
