@@ -39,13 +39,20 @@ public class PatientService {
         return !patientRepository.existsByUsername(username); // Returns true if username is available
     }
 
-    public Patient updatePatientProfile(Long id, Patient updatedPatient) {
-        Patient patient = patientRepository.findById(id)
+    public Patient updatePatientProfile(String username, Patient updatedPatient) {
+        Patient existingPatient = patientRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
-        patient.setName(updatedPatient.getName());
-        patient.setEmail(updatedPatient.getEmail());
-        patient.setPhone(updatedPatient.getPhone());
-        return patientRepository.save(patient);
+        existingPatient.setName(updatedPatient.getName());
+        existingPatient.setEmail(updatedPatient.getEmail());
+        existingPatient.setPhone(updatedPatient.getPhone());
+        existingPatient.setSecurityQuestion(updatedPatient.getSecurityQuestion());
+        existingPatient.setSecurityAnswer(updatedPatient.getSecurityAnswer());
+
+        if (updatedPatient.getPassword() != null && !updatedPatient.getPassword().isEmpty()) {
+            existingPatient.setPassword(updatedPatient.getPassword());
+        }
+
+        return patientRepository.save(existingPatient);
     }
     
     public String resetPasswordByUsername(String username, String securityAnswer, String newPassword) {
@@ -71,4 +78,7 @@ public class PatientService {
         }
         patientRepository.deleteByUsername(username);
     }
+
+	public void logoutPatient() {
+	}
 }

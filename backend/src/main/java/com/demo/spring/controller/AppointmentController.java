@@ -29,7 +29,10 @@ public class AppointmentController {
 
 	@PostMapping
 	public Appointment createAppointment(@RequestBody Appointment appointment) {
-		return appointmentService.createAppointment(appointment);
+	    if (appointment.getPatientUsername() == null || appointment.getPatientUsername().isEmpty()) {
+	        throw new RuntimeException("Patient username is required");
+	    }
+	    return appointmentService.createAppointment(appointment);
 	}
 
 	@PutMapping("/{id}")
