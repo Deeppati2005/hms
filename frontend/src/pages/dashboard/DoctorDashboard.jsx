@@ -307,117 +307,6 @@ function Appointments() {
   );
 }
 
-function Patients() {
-  const [patients, setPatients] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const userData = await authService.checkAuth();
-        setUsername(userData.username);
-
-        const appointments = await appointmentService.getAppointments();
-        const doctorAppointments = appointments.filter(
-          (a) => a.doctorUsername === userData.username
-        );
-
-        // Get unique patients from appointments
-        const uniquePatients = Array.from(
-          new Set(doctorAppointments.map((a) => a.patientUsername))
-        );
-
-        // Get patient details for each unique patient
-        const patientDetails = await Promise.all(
-          uniquePatients.map(async (patientUsername) => {
-            const patientData = await doctorService.getPatientDetails(
-              patientUsername
-            );
-            return patientData;
-          })
-        );
-
-        setPatients(patientDetails);
-      } catch (error) {
-        toast.error("Failed to fetch patients");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPatients();
-  }, []);
-
-  const filteredPatients = patients.filter(
-    (patient) =>
-      patient.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      patient.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      patient.username?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-96">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          My Patients
-        </h1>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search patients..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-64 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPatients.map((patient) => (
-          <div
-            key={patient.username}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-          >
-            <div className="p-6">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    {patient.name}
-                  </h2>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-gray-600 dark:text-gray-400">
-                      <User className="h-5 w-5 mr-2" />
-                      <span>{patient.username}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-400">
-                      <Mail className="h-5 w-5 mr-2" />
-                      <span>{patient.email}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600 dark:text-gray-400">
-                      <Phone className="h-5 w-5 mr-2" />
-                      <span>{patient.phone}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Profile() {
   const [formData, setFormData] = useState({
     username: "",
@@ -689,7 +578,6 @@ function DoctorDashboard() {
       <Routes>
         <Route index element={<Dashboard />} />
         <Route path="appointments" element={<Appointments />} />
-        <Route path="patients" element={<Patients />} />
         <Route path="profile" element={<Profile />} />
       </Routes>
     </DashboardLayout>

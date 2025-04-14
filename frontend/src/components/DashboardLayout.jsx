@@ -32,7 +32,6 @@ function DashboardLayout({ children, role }) {
     doctor: [
       { icon: Home, label: "Dashboard", path: "/doctor" },
       { icon: Calendar, label: "Appointments", path: "/doctor/appointments" },
-      { icon: Users, label: "Patients", path: "/doctor/patients" },
       { icon: User, label: "Profile", path: "/doctor/profile" },
     ],
     admin: [
