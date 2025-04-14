@@ -53,7 +53,6 @@ function DashboardLayout({ children, role }) {
             <span className="text-xl font-bold text-white">
               {role.charAt(0).toUpperCase() + role.slice(1)} Dashboard
             </span>
-            <ThemeToggle />
           </div>
 
           <nav className="flex-1 px-4 py-4 space-y-1">
