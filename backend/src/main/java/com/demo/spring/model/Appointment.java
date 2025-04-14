@@ -15,5 +15,5 @@ public class Appointment {
     private String date;
     private String time;
     private String status; // "confirmed", "cancelled", "completed","pending"
-    private String notes;
+//    private String notes;
 }
