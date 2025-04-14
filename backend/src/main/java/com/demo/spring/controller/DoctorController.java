@@ -46,9 +46,14 @@ public class DoctorController {
         return Map.of("available", available);
     }
 
-    @PutMapping("/{id}")
-    public Doctor updateDoctorProfile(@PathVariable Long id, @RequestBody Doctor doctor) {
-        return doctorService.updateDoctorProfile(id, doctor);
+    @PutMapping("/{username}")
+    public ResponseEntity<Doctor> updateDoctorProfile(@PathVariable String username, @RequestBody Doctor updatedDoctor) {
+        try {
+            Doctor doctor = doctorService.updateDoctorProfileByUsername(username, updatedDoctor);
+            return ResponseEntity.ok(doctor);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PostMapping("/check-status")
@@ -76,5 +81,11 @@ public class DoctorController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+    
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutDoctor() {
+        doctorService.logoutDoctor();
+        return ResponseEntity.ok("Admin logged out successfully");
     }
 }

@@ -51,14 +51,22 @@ public class DoctorService {
         }
     }
 
-    public Doctor updateDoctorProfile(Long id, Doctor updatedDoctor) {
-        Doctor doctor = doctorRepository.findById(id)
+    public Doctor updateDoctorProfileByUsername(String username, Doctor updatedDoctor) {
+        Doctor doctor = doctorRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        // Update fields
         doctor.setName(updatedDoctor.getName());
         doctor.setEmail(updatedDoctor.getEmail());
         doctor.setPhone(updatedDoctor.getPhone());
         doctor.setSpecialty(updatedDoctor.getSpecialty());
         doctor.setExperience(updatedDoctor.getExperience());
+        doctor.setSecurityQuestion(updatedDoctor.getSecurityQuestion());
+        doctor.setSecurityAnswer(updatedDoctor.getSecurityAnswer());
+        if (updatedDoctor.getPassword() != null && !updatedDoctor.getPassword().isEmpty()) {
+            doctor.setPassword(updatedDoctor.getPassword());
+        }
+
         return doctorRepository.save(doctor);
     }
     
@@ -77,4 +85,7 @@ public class DoctorService {
 
         return "Password reset successfully";
     }
+
+	public void logoutDoctor() {
+	}
 }
