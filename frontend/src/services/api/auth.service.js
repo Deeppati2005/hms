@@ -167,4 +167,16 @@ export const authService = {
       throw new Error("Authentication failed");
     }
   },
+
+  updateProfile: async (username, profileData) => {
+    try {
+      const response = await api.put(
+        `/patients/profile/${username}`,
+        profileData
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to update profile");
+    }
+  },
 };
