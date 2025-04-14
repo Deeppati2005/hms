@@ -253,6 +253,20 @@ function PatientList() {
     fetchPatients();
   }, []);
 
+  const handleDeletePatient = async (username) => {
+    if (window.confirm("Are you sure you want to delete this patient?")) {
+      try {
+        await adminService.deletePatient(username);
+        setPatients(
+          patients.filter((patient) => patient.username !== username)
+        );
+        toast.success("Patient deleted successfully");
+      } catch (error) {
+        toast.error("Failed to delete patient");
+      }
+    }
+  };
+
   const filteredPatients = patients.filter(
     (patient) =>
       patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -298,6 +312,9 @@ function PatientList() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                 Security Question
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -325,6 +342,14 @@ function PatientList() {
                   <div className="text-sm text-gray-500 dark:text-gray-400">
                     {patient.securityQuestion}
                   </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button
+                    onClick={() => handleDeletePatient(patient.username)}
+                    className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

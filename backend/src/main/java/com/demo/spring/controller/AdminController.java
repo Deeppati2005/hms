@@ -1,18 +1,28 @@
 package com.demo.spring.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.demo.spring.model.Admin;
 import com.demo.spring.model.Appointment;
 import com.demo.spring.model.Doctor;
 import com.demo.spring.model.Patient;
 import com.demo.spring.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import com.demo.spring.service.PatientService;
 
 @RestController
 @RequestMapping("/api/admins")
@@ -21,6 +31,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+    
+    @Autowired
+    private PatientService patientService;
 
     @PostMapping("/register")
     public Admin registerAdmin(@RequestBody Admin admin) {
@@ -106,5 +119,15 @@ public class AdminController {
     public ResponseEntity<List<Appointment>> getAllAppointments() {
         List<Appointment> appointments = adminService.getAllAppointments();
         return ResponseEntity.ok(appointments);
+    }
+   
+    @DeleteMapping("/patients/{username}")
+    public ResponseEntity<String> deletePatient(@PathVariable String username) {
+        try {
+            patientService.deletePatientByUsername(username);
+            return ResponseEntity.ok("Patient deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

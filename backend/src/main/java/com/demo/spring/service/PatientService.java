@@ -3,9 +3,12 @@ package com.demo.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.spring.model.Patient;
 import com.demo.spring.repository.PatientRepository;
+
+
 
 import java.util.Optional;
 
@@ -59,5 +62,13 @@ public class PatientService {
         patientRepository.save(patient);
 
         return "Password reset successfully";
+    }
+    
+    @Transactional
+    public void deletePatientByUsername(String username) {
+        if (!patientRepository.existsByUsername(username)) {
+            throw new RuntimeException("Patient not found");
+        }
+        patientRepository.deleteByUsername(username);
     }
 }

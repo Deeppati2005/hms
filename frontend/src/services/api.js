@@ -211,6 +211,15 @@ export const adminService = {
     }
   },
 
+  deletePatient: async (username) => {
+    try {
+      const response = await api.delete(`/admins/patients/${username}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to delete patient");
+    }
+  },
+
   getAllAppointments: async () => {
     try {
       const response = await api.get("/admins/appointments");

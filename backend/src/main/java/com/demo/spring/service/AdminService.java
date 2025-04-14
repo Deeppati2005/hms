@@ -111,4 +111,6 @@ public class AdminService {
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
+    
+    
 }
