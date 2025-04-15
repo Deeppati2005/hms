@@ -42,8 +42,7 @@ The HMS system follows a client-server architecture:
 - **Backend**:
   - Java
   - Spring Boot
-  - Spring Security (for authentication and authorization)
-  - MySQL (Database)
+  - PostgreSQL (Database)
   - JPA/Hibernate (ORM)
 
 ## Setup Instructions
@@ -57,7 +56,7 @@ The HMS system follows a client-server architecture:
    ```
 
 2. **Configure the database**:
-   - Create a MySQL database named `hms`.
+   - Create a PostgreSQL database named `hms`.
    - Update the `application.properties` file with your MySQL credentials:
      ```properties
      spring.datasource.url=jdbc:mysql://localhost:3306/hms
@@ -87,7 +86,7 @@ The HMS system follows a client-server architecture:
    ```bash
    npm start
    ```
-   - The frontend will start on `http://localhost:3000`.
+   - The frontend will start on `http://localhost:5173`.
 
 ## API Endpoints
 
@@ -114,9 +113,7 @@ Below is a comprehensive list of API endpoints exposed by the backend:
 | PUT    | `/api/appointments/{id}` | Update appointment details           | Updated details (JSON)| Success message  |
 | DELETE | `/api/appointments/{id}` | Cancel appointment by ID             | None                  | Success message  |
 
-> **Note**: All endpoints under `/api/users`, `/api/doctors`, `/api/patients`, and `/api/appointments` require authentication. Include the JWT token in the `Authorization` header as follows:
-> ```
-> Authorization: Bearer your_jwt_token
+> **Note**: All endpoints under `/api/users`, `/api/doctors`, `/api/patients`, and `/api/appointments` require authentication.
 > ```
 
 ## Project Structure
@@ -133,7 +130,7 @@ hms/
 │   │   │   │           ├── model/
 │   │   │   │           ├── repository/
 │   │   │   │           ├── service/
-│   │   │   │           └── HmsApplication.java
+│   │   │   │           └── BackendApplication.java
 │   │   │   └── resources/
 │   │   │       └── application.properties
 ├── frontend/
@@ -142,7 +139,7 @@ hms/
 │       ├── components/
 │       ├── pages/
 │       ├── services/
-│       └── App.js
+│       └── App.jsx
 ```
 
 - **backend/controller**: Contains REST controllers handling HTTP requests.
@@ -156,7 +153,3 @@ hms/
 ## Contributing
 
 Contributions are welcome! Feel free to open issues, create pull requests, or fork the repo.
-
-## License
-
-This project is open-source and available under the [MIT License](LICENSE).
