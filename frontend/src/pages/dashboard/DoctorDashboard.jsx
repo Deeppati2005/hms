@@ -16,12 +16,13 @@ function Dashboard() {
     totalPatients: 0,
   });
   const [username, setUsername] = useState("");
-
+  const [name, setName] = useState("");
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const userData = await authService.checkAuth();
         setUsername(userData.username);
+        setName(userData.name);
 
         const appointments = await appointmentService.getAppointments();
         const doctorAppointments = appointments.filter(
@@ -51,7 +52,7 @@ function Dashboard() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-        Doctor Dashboard
+        Welcome, Dr. {name}!
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

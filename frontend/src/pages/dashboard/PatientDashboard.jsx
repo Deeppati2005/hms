@@ -16,12 +16,14 @@ function Dashboard() {
     availableDoctors: 0,
   });
   const [username, setUsername] = useState("");
+  const [name, setName] = useState(""); // Add state for the patient's name
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const userData = await authService.checkAuth();
         setUsername(userData.username);
+        setName(userData.name); 
 
         const appointments = await appointmentService.getAppointments();
         const userAppointments = appointments.filter(
@@ -48,7 +50,7 @@ function Dashboard() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-        Patient Dashboard
+        Welcome, {name}! {/* Display the patient's name */}
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
