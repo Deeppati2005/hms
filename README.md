@@ -1,157 +1,154 @@
-# HMS - Hospital Management System
+# 🏥 Hospital Management System (HMS)
 
-## Overview
+## 🚀 Overview
 
-HMS is a comprehensive Hospital Management System designed to streamline hospital operations by managing patients, doctors, appointments, and more. This system comprises a frontend built with React.js and a backend powered by Java and Spring Boot, ensuring a robust and scalable architecture.
+The **Hospital Management System (HMS)** is a full-stack web application built using **Spring Boot** and **React (Vite)**, designed to efficiently manage healthcare operations. It offers role-based functionalities for **Admins**, **Doctors**, and **Patients** including appointment booking, user management, and secure authentication.
 
-## Table of Contents
+---
 
-- [Features](#features)
-- [Architecture](#architecture)
-- [Technology Stack](#technology-stack)
-- [Setup Instructions](#setup-instructions)
-  - [Backend Setup](#backend-setup)
-  - [Frontend Setup](#frontend-setup)
-- [API Endpoints](#api-endpoints)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+## 🎯 Features
 
-## Features
+- 🔐 **Authentication**: Role-based login and registration with secure password reset using security questions.
+- 🧑‍⚕️ **Admin Dashboard**: 
+  - Approve or reject doctor registrations.
+  - Manage doctors, patients, and appointments.
+- 👨‍⚕️ **Doctor Dashboard**:
+  - View and manage appointments.
+  - Access and update profile.
+- 👤 **Patient Dashboard**:
+  - Book and view appointments.
+  - Update personal information.
+- 🌗 **Responsive UI**: Built for both light and dark themes using TailwindCSS.
+- 💾 **PostgreSQL Database**: Robust relational database integration with JPA.
 
-- **User Management**: Register and manage users with different roles (Admin, Doctor, Patient).
-- **Appointment Scheduling**: Book, view, and manage appointments.
-- **Doctor Management**: Add, update, and remove doctor profiles.
-- **Patient Records**: Maintain comprehensive patient information.
-- **Authentication & Authorization**: Secure login and role-based access control.
+---
 
-## Architecture
+## 🧱 Project Structure
 
-The HMS system follows a client-server architecture:
+### 🔧 Backend (Spring Boot)
 
-- **Frontend**: Developed using React.js, providing an interactive user interface.
-- **Backend**: Built with Java and Spring Boot, exposing RESTful APIs for data operations.
-- **Database**: Utilizes PostgreSQL for data persistence.
-
-## Technology Stack
-
-- **Frontend**:
-  - React.js
-  - Axios (for API calls)
-  - React Router (for routing)
-- **Backend**:
-  - Java
-  - Spring Boot
-  - PostgreSQL (Database)
-  - JPA/Hibernate (ORM)
-
-## Setup Instructions
-
-### Backend Setup
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Deeppati2005/hms.git
-   cd hms/backend
-   ```
-
-2. **Configure the database**:
-   - Create a PostgreSQL database named `hms`.
-   - Update the `application.properties` file with your PostgreSQL credentials:
+- **Language**: Java 17+
+- **Build Tool**: Maven
+- **Database**: PostgreSQL with Spring Data JPA
+- **Main Modules**:
 
 
-     ```properties 
-     spring.datasource.url=jdbc:postgresql://localhost:5432/hms
-     spring.datasource.username=your_username
-     spring.datasource.password=your_password
-     ```
+  - `AdminService`
+  - `DoctorService`
+  - `PatientService`
+  - `AppointmentService`
 
-3. **Build and run the backend**:
-   ```bash
-   mvn spring-boot:run
-   ```
-   - The backend will start on `http://localhost:8080`.
+### 💻 Frontend (React + Vite)
 
-### Frontend Setup
+- **Framework**: React JS
+- **Routing**: React Router DOM
+- **State Management**: Context API
+- **Styling**: TailwindCSS
+- **HTTP Client**: Axios
 
-1. **Navigate to the frontend directory**:
-   ```bash
-   cd ../frontend
-   ```
+---
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+## 🛠️ Setup Instructions
 
-3. **Start the frontend**:
-   ```bash
-   npm start
-   ```
-   - The frontend will start on `http://localhost:5173`.
+### ✅ Prerequisites
 
-## API Endpoints
+- **Backend**: Java 17+, Maven, PostgreSQL
+- **Frontend**: Node.js 16+, npm or yarn
 
-Below is a comprehensive list of API endpoints exposed by the backend:
+---
 
-| Method | Endpoint                 | Description                          | Request Body          | Response         |
-|--------|--------------------------|--------------------------------------|-----------------------|------------------|
-| POST   | `/api/auth/register`     | Register a new user                  | User details (JSON)   | Success message  |
-| POST   | `/api/auth/login`        | Authenticate user and obtain token   | Credentials (JSON)    | JWT token        |
-| GET    | `/api/users`             | Retrieve all users (Admin only)      | None                  | List of users    |
-| GET    | `/api/users/{id}`        | Retrieve user by ID                  | None                  | User details     |
-| PUT    | `/api/users/{id}`        | Update user information              | Updated details (JSON)| Success message  |
-| DELETE | `/api/users/{id}`        | Delete user by ID                    | None                  | Success message  |
-| GET    | `/api/doctors`           | Retrieve all doctors                 | None                  | List of doctors  |
-| POST   | `/api/doctors`           | Add a new doctor                     | Doctor details (JSON) | Success message  |
-| PUT    | `/api/doctors/{id}`      | Update doctor information            | Updated details (JSON)| Success message  |
-| DELETE | `/api/doctors/{id}`      | Delete doctor by ID                  | None                  | Success message  |
-| GET    | `/api/patients`          | Retrieve all patients                | None                  | List of patients |
-| POST   | `/api/patients`          | Add a new patient                    | Patient details (JSON)| Success message  |
-| PUT    | `/api/patients/{id}`     | Update patient information           | Updated details (JSON)| Success message  |
-| DELETE | `/api/patients/{id}`     | Delete patient by ID                 | None                  | Success message  |
-| GET    | `/api/appointments`      | Retrieve all appointments            | None                  | List of appointments |
-| POST   | `/api/appointments`      | Schedule a new appointment           | Appointment details (JSON) | Success message |
-| PUT    | `/api/appointments/{id}` | Update appointment details           | Updated details (JSON)| Success message  |
-| DELETE | `/api/appointments/{id}` | Cancel appointment by ID             | None                  | Success message  |
+## 📡 API Endpoints
 
-> **Note**: All endpoints under `/api/users`, `/api/doctors`, `/api/patients`, and `/api/appointments` require authentication.
-> ```
+<details>
+<summary><strong>Admin Endpoints</strong></summary>
 
-## Project Structure
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/admins/register` | Register a new admin |
+| POST | `/api/admins/login` | Login as an admin |
+| GET | `/api/admins` | Get all admins |
+| GET | `/api/admins/{username}` | Get admin details by username |
+| GET | `/api/admins/check-username/{username}` | Check if admin username is available |
+| POST | `/api/admins/reset-password` | Reset admin password using security question |
+| GET | `/api/admins/profile` | Get logged-in admin profile |
+| PUT | `/api/admins/profile` | Update admin profile |
+| POST | `/api/admins/logout` | Logout admin |
+| GET | `/api/admins/doctors` | Get all doctors |
+| GET | `/api/admins/patients` | Get all patients |
+| GET | `/api/admins/appointments` | Get all appointments |
+| DELETE | `/api/admins/patients/{username}` | Delete patient by username |
+| PUT | `/api/admins/doctors/{id}/status` | Approve/Reject doctor |
 
-```
-hms/
-├── backend/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/
-│   │   │   │   └── com/
-│   │   │   │       └── hms/
-│   │   │   │           ├── controller/
-│   │   │   │           ├── model/
-│   │   │   │           ├── repository/
-│   │   │   │           ├── service/
-│   │   │   │           └── BackendApplication.java
-│   │   │   └── resources/
-│   │   │       └── application.properties
-├── frontend/
-│   ├── public/
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       ├── services/
-│       └── App.jsx
-```
+</details>
 
-- **backend/controller**: Contains REST controllers handling HTTP requests.
-- **backend/model**: Defines the data models/entities.
-- **backend/repository**: Interfaces for database operations.
-- **backend/service**: Business logic and service layer.
-- **frontend/components**: Reusable UI components.
-- **frontend/pages**: Route-based components for different dashboards.
-- **frontend/services**: Axios-based service files for API interaction.
+<details>
+<summary><strong>Doctor Endpoints</strong></summary>
 
-## Contributing
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/doctors/register` | Register a new doctor |
+| POST | `/api/doctors/login` | Login as a doctor |
+| GET | `/api/doctors` | Get all doctors |
+| GET | `/api/doctors/{id}` | Get doctor details by ID |
+| GET | `/api/doctors/check-username/{username}` | Check if doctor username is available |
+| PUT | `/api/doctors/{username}` | Update doctor profile |
+| POST | `/api/doctors/check-status` | Check doctor approval status |
+| POST | `/api/doctors/reset-password` | Reset doctor password |
+| POST | `/api/doctors/logout` | Logout doctor |
 
-Contributions are welcome! Feel free to open issues, create pull requests, or fork the repo.
+</details>
+
+<details>
+<summary><strong>Patient Endpoints</strong></summary>
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/patients/register` | Register a new patient |
+| POST | `/api/patients/login` | Login as a patient |
+| GET | `/api/patients/check-username/{username}` | Check if patient username is available |
+| GET | `/api/patients/{id}` | Get patient details by ID |
+| PUT | `/api/patients/profile/{username}` | Update patient profile |
+| GET | `/api/patients/{username}/appointments` | Get patient's appointments |
+| POST | `/api/patients/appointments` | Book new appointment |
+| DELETE | `/api/patients/appointments/{id}` | Cancel appointment |
+| POST | `/api/patients/reset-password` | Reset patient password |
+| POST | `/api/patients/logout` | Logout patient |
+
+</details>
+
+<details>
+<summary><strong>Appointment Endpoints</strong></summary>
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/appointments` | Get all appointments |
+| GET | `/api/appointments/{id}` | Get appointment by ID |
+| POST | `/api/appointments` | Create a new appointment |
+| PUT | `/api/appointments/{id}` | Update appointment |
+| DELETE | `/api/appointments/{id}` | Delete appointment |
+| GET | `/api/appointments/available-slots` | Get available slots by date & doctor |
+
+</details>
+
+---
+
+## 📷 Screenshots
+
+### 🏠 Landing Page
+![Landing Page](public/screenshots/landing.png)
+
+### 👤 Patient Dashboard
+![Patient Dashboard](public/screenshots/patient-dashboard.png)
+
+### 👨‍⚕️ Doctor Dashboard
+![Doctor Dashboard](public/screenshots/doctor-dashboard.png)
+
+### 🧑‍💼 Admin Dashboard
+![Admin Dashboard](public/screenshots/admin-dashboard.png)
+
+
+---
+
+
+---
+
