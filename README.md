@@ -31,7 +31,7 @@ The HMS system follows a client-server architecture:
 
 - **Frontend**: Developed using React.js, providing an interactive user interface.
 - **Backend**: Built with Java and Spring Boot, exposing RESTful APIs for data operations.
-- **Database**: Utilizes MySQL for data persistence.
+- **Database**: Utilizes PostgreSQL for data persistence.
 
 ## Technology Stack
 
@@ -57,9 +57,11 @@ The HMS system follows a client-server architecture:
 
 2. **Configure the database**:
    - Create a PostgreSQL database named `hms`.
-   - Update the `application.properties` file with your MySQL credentials:
-     ```properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/hms
+   - Update the `application.properties` file with your PostgreSQL credentials:
+
+
+     ```properties 
+     spring.datasource.url=jdbc:postgresql://localhost:5432/hms
      spring.datasource.username=your_username
      spring.datasource.password=your_password
      ```
