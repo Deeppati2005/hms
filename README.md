@@ -1,4 +1,4 @@
-# 🏥 Hospital Management System (HMS) Pranayan Khan
+# 🏥 Hospital Management System (HMS)
 
 ## 🚀 Overview
 
